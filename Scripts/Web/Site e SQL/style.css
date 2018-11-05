@@ -1,0 +1,59 @@
+<head>
+<meta charset="utf-8">
+</head>
+<style> table {
+    border-collapse: collapse;
+    width: 100%;
+    height: 100%;
+    font-size: 50px;
+    
+}
+
+tr:nth-child(even) {
+    background-color: #d8d8d8;
+}
+
+
+input {
+    vertical-align: center;
+    text-align: center;
+    width: auto;
+}
+a{
+    font-size: 25px;
+    text-decoration: none;
+    color: dodgerblue;
+}
+.overflow{
+    overflow: auto;
+    align-content: center;
+}
+.avaliador{
+    
+    width: 100%;
+}
+.boxavaliacao{
+    width: 90%;
+    font-size: 50px;
+}
+.textoavaliacao{
+    
+    font-size:50px;  
+}
+.radio{
+    width:50px;
+    height: 50px;
+}
+</style >
+<datalist id="turma">
+                <option value="1">
+                <option value="2">
+                <option value="3">
+
+            </datalist>
+<datalist id="teste">
+                <option value="Projeto 1">
+                <option value="Projeto 2">
+                <option value="projeto 3">
+
+            </datalist>
