@@ -113,7 +113,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 <meta charset="utf-8" />
 
 <body>
-    <form method="post" class="boxavaliacao" target="Avaliacao.php">
+    <form method="post" class="boxavaliacao" target="avaliacao.php">
         <center>
             <h2>Ficha de avaliação TCC/
                 <?php echo $ano; ?>

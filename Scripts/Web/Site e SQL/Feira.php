@@ -2,7 +2,7 @@
 <html>
     <?php require('style.css'); require('teste.php') ?>
         <body>
-    <form method="post" class="boxavaliacao" target="Avaliacao.php">
+    <form method="post" class="boxavaliacao" target="feira.php">
         <center>
             <h2>Ficha de avaliação TCC/
                 <?php echo $ano; ?>
