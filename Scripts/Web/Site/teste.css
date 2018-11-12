@@ -1,0 +1,53 @@
+<style>
+body {
+    margin:0;
+    padding:0;
+    color:white;
+    
+}
+#geral {
+    width:960px;
+    margin:0 auto;
+}
+#cabecalho {
+
+}
+#conteudo-1 {
+    float:left;
+    width:200px;
+
+}
+#conteudo-2 {
+    float:left;
+    width:200px;
+    
+}
+#conteudo-2-1 {
+    float:right;
+    width:100px;
+    
+}
+.fa{
+    padding: 5px;
+  font-size: 10px;
+  width: 10px;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 1vh;
+}
+.fa:hover {
+    opacity: 0.7;
+}
+.fa-facebook{
+    background: #3B5998;
+    color: white;
+}
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+.fa-linkedin {
+  background: #007bb5;
+  color: white;
+}
+</style>

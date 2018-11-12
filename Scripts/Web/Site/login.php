@@ -5,7 +5,7 @@
   $login = "";  
   //$password = "MTIzNA==";
 
-
+require('style.css');
 require('conf_db.php');
     
     //Conecta com o Banco de Dados
@@ -80,15 +80,18 @@ require('conf_db.php');
         //Efetuar o login
     else{
     ?> 
-    <form action="login_correto.php" method="post" style="">
+    <form action="login.php" method="post" style="">
+        <div class="login">
         Login:
-        <input type="text" name="user" value="<?php //echo $login ?>" />
+            <input type="text" name="user" value="<?php //echo $login ?>" />
         <br /> Senha:
         <input type="password" name="password" />
         <br />
         <br />
         <input type="submit" value="Logar" />
         <?php echo $mensagem ?>
+        </div>
+        
     </form>
     <?php
     }

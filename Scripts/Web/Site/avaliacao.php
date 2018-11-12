@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     
-<?php require('teste.php'); require('style.css'); require('conf_db.php');
+<?php require('horario.php'); require('style.css'); require('conf_db.php');
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
     try{
