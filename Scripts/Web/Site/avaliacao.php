@@ -206,10 +206,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                         <th>
                             Domínio Técnico
                         </th>
-                        <?php echo"<th><label><input type='radio' class='radio' style='' name='DominioTecnico' value='I' checked='true'> I</label><br>
-                                       <label><input type='radio' class='radio' name='DominioTecnico' value='R'> R</label><br>
-                                       <label><input type='radio' class='radio' name='DominioTecnico' value='B'> B</label><br>
-                                       <label><input type='radio' class='radio' name='DominioTecnico' value='MB'> MB</label><br></th>";
+                        <?php echo"<th><label><input type='radio' class='radio' style='' name='DominioTecnico' value='I' checked='true'> I</label>
+                                       <label><input type='radio' class='radio' name='DominioTecnico' value='R'> R</label>
+                                       <label><input type='radio' class='radio' name='DominioTecnico' value='B'> B</label>
+                                       <label><input type='radio' class='radio' name='DominioTecnico' value='MB'> MB</label></th>";
                         ?>
                     </tr>
                     <tr>

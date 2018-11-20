@@ -22,7 +22,7 @@ input {
 }
 a{
     font-size: 25px;
-    text-decoration: none;
+    text-decoration:underline;
     color: dodgerblue;
 }
 .overflow{
@@ -53,10 +53,10 @@ a{
 }
 .iframeLogin{
     position: relative;
-    width: 20%;
-    height: 75%;
+    width: 15%;
+    height: 25%;
     overflow: hidden;
-    top: 50%;
+    top: 0%;
     float:right;
     vertical-align: top;
     background-color: white;
