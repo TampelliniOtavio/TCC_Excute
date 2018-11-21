@@ -65,13 +65,21 @@ require('conf_db.php');
 
 <head>
 </head>
-
+<style>
+    body{
+        align-items: center;
+        text-align:justify;
+            font-family: 'CaviarDreams';
+        font-weight: bold;
+    }
+    
+    </style>
 <body>
     <?php
         //Login efetuado
     if(isset($_SESSION["logado"] ) ){
       echo "Seja bem vindo(a) " . $_SESSION["logado"]; ?>
-    <form action="login_correto.php" method="post">
+    <form action="login.php" method="post">
         <input type="hidden" name="sair" value="sim">
         <input type="submit" value="Clique aqui para deslogar">
     </form>
@@ -88,7 +96,7 @@ require('conf_db.php');
         <input type="password" name="password" />
         <br />
         <br />
-        <input type="submit" value="Logar" />
+        <input type="submit" value="Entrar" />
         <?php echo $mensagem ?>
         </div>
         

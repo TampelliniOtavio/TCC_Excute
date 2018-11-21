@@ -1,5 +1,5 @@
 <?php
-$servidor = "localhost:81";
+$servidor = "localhost";
 $usuario = "root";
 $senha = "";
 $basedados = "banquitomeu";

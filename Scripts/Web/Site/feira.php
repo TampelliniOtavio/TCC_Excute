@@ -1,6 +1,20 @@
 <!DOCTYPE html>
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+    height: 100%;
+    font-size: 50px;
+
+}
+
+tr:nth-child(even) {
+    background-color: #d8d8d8;
+}
+
+</style>
 <html>
-    <?php require('style.css'); require('teste.php') ?>
+    <?php require('style.css'); require('horario.php');?>
         <body>
     <form method="post" class="boxavaliacao" target="feira.php">
         <center>
@@ -16,7 +30,7 @@
         </center>
 
         <div class="avaliador">
-            Avaliador: <input type="text" class="textoavaliacao" name="avaliador">
+            Avaliador: Ângela Piazentin
         </div>
 
         <br />
