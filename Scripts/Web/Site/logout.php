@@ -1,6 +1,8 @@
 <?php
 session_start();
-session_unset();
+if(isset($_POST["Sair"])){
+    unset($_SESSION["logado"]);
+}
 header('Location:index.php');
 exit;
 ?>

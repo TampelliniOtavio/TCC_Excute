@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
-<?php require('style.css'); require('horario.php'); session_start(); ?>
-
+<?php require('style.css'); require('horario.php'); require('conf_db.php'); session_start();
+    
+    
+?>
 <head>
 
 </head>
@@ -18,7 +20,7 @@
         background-color: white;
     }
     .form{
-        margin-top: 7vh;
+        margin-top: 5vh;
     }
     .input{
     font-size: 30px;
@@ -43,11 +45,49 @@
     </style>
 <body>
     <?php 
-    $usuario = 3;
+    if(isset($_SESSION["logado"])){
+        $conex = new PDO("mysql:host=$servidor;dbname=$basedados",$usuario,$senha);
+        $conex->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+             $comando = $conex->prepare(" SELECT * FROM users WHERE username=:pusername"); 
+             $params = array(':pusername' => $_SESSION['logado']);
+             $comando->execute($params);
+
+             $comando2 = $conex->prepare(" SELECT * FROM professores WHERE username=:pusername"); 
+             $params2 = array(':pusername' => $_SESSION['logado']);
+             $comando2->execute($params);
+        
+             $comando3 = $conex->prepare(" SELECT * FROM coordenador WHERE username=:pusername"); 
+             $params3 = array(':pusername' => $_SESSION['logado']);
+             $comando3->execute($params);
+        
+        if ($linha = $comando->fetch(PDO::FETCH_ASSOC)) {
+                if($linha["username"] == $_SESSION['logado']) {
+                    $usuario = 1;
+                }
+
+            }
+              if ($linha = $comando2->fetch(PDO::FETCH_ASSOC)) {
+                if($linha["username"] == $_SESSION['logado']) {
+                    $usuario = 3;
+                }
+            }
+              if ($linha = $comando3->fetch(PDO::FETCH_ASSOC)) {
+                if($linha["username"] == $_SESSION['logado']) {
+                    $usuario = 2;
+                }
+            }
+        
+        
+        
+        ?>
+    
+        Olá <?php echo $_SESSION['logado'];?>.<br />
+    <?php
     if($usuario == 1){
     ?>
 
-    Olá Excute.<br />
+    
     <div style="margin-top:10vh;">
     <table>
         
@@ -104,7 +144,7 @@
 }
     if($usuario == 2){
         ?>
-    Olá Administrador.<br />
+    
     <form>
         <table>
         <tr>
@@ -126,13 +166,20 @@
     <form action="feira.php" method="post">
         <button type="submit" class="input form">Avaliação na Feira</button>
     </form>
+    
+    <div id="my-div">
+<a href="tabprojeto.php" class="fill-div">Tabela Projeto(para exportar)</a>
+<br/><a href="tabalunos.php" class="fill-div">Tabela Aluno(para exportar)</a>
+<br/><a href="tabela.php" class="fill-div">Todos Projetos(visualização geral)</a>
+<br/><a href="tudo.php" class="fill-div">Todos os dados(visualização geral alunos+projetos)</a>
+</div>
 
 
     <?php
     }
     if($usuario == 3){
         ?>
-    Olá Ângela Piazentin.<br />
+    
     <form action="avaliacao.php" method="post" >
         <button type="submit" class="input form">Avaliação na Banca</button>
     </form>
@@ -145,10 +192,15 @@
     }
     ?>
 
-    <form action="logout.php">
-        <input type="submit" class="input form" value="Sair" href="logout.php">
+    <form action="logout.php" method="post" >
+        <input type="submit" class="input form" name="Sair" value="Sair" href="logout.php">
     </form>
     <div class="divcontato"><iframe src="contato.php" frameborder="0" width="100%" height="100%" scrolling="no"></iframe></div>
+    <?php 
+    }else{
+        header('Location:index.php');
+    }
+    ?>
 </body>
 
 </html>

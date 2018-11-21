@@ -25,9 +25,19 @@ require('horario.php');
              $conex = new PDO("mysql:host=$servidor;dbname=$basedados",$usuario,$senha);
              //$conex = new PDO("mysql:server=$servidor;userid=$basedados;password=$senha;database=$basedados");
              $conex->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+              
+              
              $comando = $conex->prepare(" SELECT * FROM users WHERE username=:pusername"); 
              $params = array(':pusername' => $login);
              $comando->execute($params);
+              
+             $comando2 = $conex->prepare(" SELECT * FROM professores WHERE username=:pusername"); 
+             $params2 = array(':pusername' => $login);
+             $comando2->execute($params);
+        
+             $comando3 = $conex->prepare(" SELECT * FROM coordenador WHERE username=:pusername"); 
+             $params3 = array(':pusername' => $login);
+             $comando3->execute($params);
 
               
              if ($linha = $comando->fetch(PDO::FETCH_ASSOC)) {
@@ -41,23 +51,28 @@ require('horario.php');
                     exit();
                 }
 
+            }
+              if ($linha = $comando2->fetch(PDO::FETCH_ASSOC)) {
+                if($linha["username"] == $login
+                    && $linha["password"] == base64_encode($password)) {
 
-                  //Usuario incorreto
-                if($linha["username"] != $login) {
-                  $mensagem = "<br><br> usuario incorreto";
-                    echo  "<script>alert('Usuário incorreto');</script>";
+                    //Login efetuado
+                  $mensagem = "Logado com sucesso";
+                  $_SESSION["logado"] = $linha['username'];
+                    header("Location: usuario.php");
+                    exit();
                 }
+            }
+              if ($linha = $comando3->fetch(PDO::FETCH_ASSOC)) {
+                if($linha["username"] == $login
+                    && $linha["password"] == base64_encode($password)) {
 
-
-                  //Senha incorreta
-                  if($linha["password"] != base64_encode($password)) {
-                      $mensagem = "<br><br> senha incorreta";
-                      echo  "<script>alert('Senha Incorreta');</script>";
+                    //Login efetuado
+                  $mensagem = "Logado com sucesso";
+                  $_SESSION["logado"] = $linha['username'];
+                    header("Location: usuario.php");
+                    exit();
                 }
-                 else{
-                     echo  "<script>alert('Usuário ou senha incorreto');</script>";
-                 }
-
             }
           }
 
@@ -146,6 +161,7 @@ require('horario.php');
         height: 16vh;
     }
 </style>
+
 <body>
     <title>Excute</title>
     <!--
@@ -162,10 +178,14 @@ require('horario.php');
         //Login efetuado
     if(isset($_SESSION["logado"] ) ){
       echo "Seja bem vindo(a) " . $_SESSION["logado"]; ?>
+        <form action="usuario.php">
+            <input type="submit" value="Área do usuário">
+        </form>
         <form action="index.php" method="post">
             <input type="hidden" name="sair" value="sim">
             <input type="submit" value="Clique aqui para deslogar">
         </form>
+
         <?php
     }
         //Efetuar o login
@@ -173,11 +193,11 @@ require('horario.php');
     ?>
         <form action="index.php" method="post" style="">
             <div style="margin-right:5vh;">
-            Login:&nbsp;
-            <input type="text" name="user" value="<?php //echo $login ?>" />
-            <br /> Senha:&nbsp;
-            <input type="password" name="password" />
-                </div>
+                Login:&nbsp;
+                <input type="text" name="user" value="<?php //echo $login ?>" />
+                <br /> Senha:&nbsp;
+                <input type="password" name="password" />
+            </div>
             <br />
             <br />
             <div style="margin-right:15vh"><input type="submit" value="Entrar" /></div>
