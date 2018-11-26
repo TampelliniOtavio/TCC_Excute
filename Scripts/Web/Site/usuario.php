@@ -151,13 +151,7 @@
                 
                 
                 ?>
-                <td>Excute</td>
-                <td>João da Silva</td>
-                <td>joao.silva@email.com</td>
-                <td>911225341</td>
-                <td>Ângela Piazentin</td>
-                <td>angelapiazentin@gmail.com</td>
-                <td>ETEC Jorge Street</td>
+                
             </tr>
 
 
