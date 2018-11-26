@@ -9,11 +9,13 @@
     */
     
     require("style.css");
+/*
     $servidor = "robb0360.publiccloud.com.br:3306";
     $usuario = "rcaru_excute";
     $senha = "@2Info#Vai";
     $basedados = "rcaruso_excute";
-    
+    */
+require("conf_db.php");
 	/*
     $servidor = "mysql01-farm13.kinghost.net";
     $usuario = "educatronica";
@@ -59,11 +61,13 @@
         $nec="";
         $txtoutra="";
         $txtoutro="";
+        $password="";
 
         if( isset($_POST["txtTP"]) )
         {
             $txtTP = $_POST["txtTP"];
             $txtNE=$_POST["txtNE"];
+            $password=base64_encode($_POST["Password"]);
             if($txtNE=="Outra")$txtNE=$_POST["txtOutraEscola"];
             $txtNPO=$_POST["txtNPO"];
             $txtEPO=$_POST["txtEPO"];
@@ -129,8 +133,8 @@
               $nome_x = $_POST["nome_" . $contalunos];
               $email_x = $_POST["email_" . $contalunos];
               $rg_x = $_POST["rg_" . $contalunos];
-              $comando = $conex->prepare("INSERT INTO aluno(Nome, Email, RG, Modulo, Habilitacao, Nome_Escola,Fk_Inscricao) 
-              VALUES(:pnome_x, :pemail_x, :prg_x, :psm, :phab, :pne, :pinsc) ");
+              $comando = $conex->prepare("INSERT INTO aluno(Nome, Email, RG, Modulo, Habilitacao, Nome_Escola, senha, Fk_Inscricao) 
+              VALUES(:pnome_x, :pemail_x, :prg_x, :psm, :phab, :pne, :psen, :pinsc) ");
               $params = array(
               ":pnome_x" => $nome_x,
               ":pemail_x" => $email_x,
@@ -138,6 +142,7 @@
               ":psm" => $sm,
               ":phab" => $hab,
               ":pne" => $txtNE,
+              ":psen" => $password,
               ":pinsc" => $codigoProjeto
               );
 
@@ -444,7 +449,7 @@
 </ul></nav> <br/> </div> </div>
 </head>
 <body>
-<iframe src="login.php" class="iframeLogin"></iframe>
+
 <div class="espacao">
 <div class="ins">EXCUTE</div>
 <div class="branco">.</div>
@@ -546,6 +551,9 @@
       <!--tr><td class="clsoption"><input type="checkbox" name="nec" value="Nenhuma">Nenhuma</td></tr-->
       <tr><td class="clsoption"><input type="checkbox" name="nec" value="Outra" onchange="exibeNeceOutro(this.checked)">Outro</td><td><input type="text" id="txtoutra" name="txtoutra" value="<?=$txtoutra?>" style="visibility:hidden"></td></tr>
       </tr>
+    
+    <tr><td colspan="2">Criar a senha do projeto:</td></tr>
+    <tr><td><input type="password" name="Password"></td></tr>
     </table>
     
 	</div>

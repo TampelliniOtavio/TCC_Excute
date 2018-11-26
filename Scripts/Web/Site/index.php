@@ -8,7 +8,17 @@
 require('style.css');
 require('conf_db.php');
 require('horario.php');
-    
+function Retirar_caracter($objeto){
+    $arroba = "@";
+    $ponto = ".";
+    $underline = "_";
+    $traco = "-";
+    $resultado1 = str_replace($arroba,"",$objeto);
+    $resultado2 = str_replace($ponto,"",$resultado1);
+    $resultado3 = str_replace($underline,"",$resultado2);
+    $resultado4 = str_replace($traco,"",$resultado3);
+    return $resultado4;
+}
     //Conecta com o Banco de Dados
   
 	//Configura a conexão para mostrar erros (IMPORTANTE PARA VER OS ERROS SENÃO O PDO TE ENGANA!)
@@ -20,33 +30,34 @@ require('horario.php');
           {
              $login = $_POST["user"];
             $password = $_POST["password"];
-              
+             
               
              $conex = new PDO("mysql:host=$servidor;dbname=$basedados",$usuario,$senha);
-             //$conex = new PDO("mysql:server=$servidor;userid=$basedados;password=$senha;database=$basedados");
              $conex->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
               
               
-             $comando = $conex->prepare(" SELECT * FROM users WHERE username=:pusername"); 
+             $comando = $conex->prepare(" SELECT * FROM aluno WHERE Email=:pusername"); 
              $params = array(':pusername' => $login);
              $comando->execute($params);
               
-             $comando2 = $conex->prepare(" SELECT * FROM professores WHERE username=:pusername"); 
+             $comando2 = $conex->prepare(" SELECT * FROM professores WHERE email=:pusername"); 
              $params2 = array(':pusername' => $login);
              $comando2->execute($params);
         
-             $comando3 = $conex->prepare(" SELECT * FROM coordenador WHERE username=:pusername"); 
+             $comando3 = $conex->prepare(" SELECT * FROM coordenador WHERE email=:pusername"); 
              $params3 = array(':pusername' => $login);
              $comando3->execute($params);
 
               
              if ($linha = $comando->fetch(PDO::FETCH_ASSOC)) {
-                if($linha["username"] == $login
-                    && $linha["password"] == base64_encode($password)) {
+                $email = $linha['Email'];
+                if( Retirar_caracter($email) == Retirar_caracter($login) 
+                    && $linha["senha"] == base64_encode($password)) {
 
                     //Login efetuado
-                  $mensagem = "Logado com sucesso";
-                  $_SESSION["logado"] = $linha['username'];
+                  $_SESSON["email"] = $login; 
+                  $_SESSION["logado"] = $linha['Nome'];
+                  
                     header("Location: usuario.php");
                     exit();
                 }
@@ -57,8 +68,9 @@ require('horario.php');
                     && $linha["password"] == base64_encode($password)) {
 
                     //Login efetuado
-                  $mensagem = "Logado com sucesso";
+                  
                   $_SESSION["logado"] = $linha['username'];
+                  $_SESSION["email"] = $login;
                     header("Location: usuario.php");
                     exit();
                 }
@@ -68,8 +80,9 @@ require('horario.php');
                     && $linha["password"] == base64_encode($password)) {
 
                     //Login efetuado
-                  $mensagem = "Logado com sucesso";
+                  
                   $_SESSION["logado"] = $linha['username'];
+                    $_SESSION["email"] = $login;
                     header("Location: usuario.php");
                     exit();
                 }
@@ -82,6 +95,7 @@ require('horario.php');
     unset($_SESSION["logado"]);
   }
 //HTML
+echo $_SESSION['email'];
 ?>
 <html>
 <style>
@@ -193,7 +207,7 @@ require('horario.php');
     ?>
         <form action="index.php" method="post" style="">
             <div style="margin-right:5vh;">
-                Login:&nbsp;
+                Email:&nbsp;
                 <input type="text" name="user" value="<?php //echo $login ?>" />
                 <br /> Senha:&nbsp;
                 <input type="password" name="password" />

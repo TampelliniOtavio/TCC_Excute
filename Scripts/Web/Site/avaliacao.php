@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     
-<?php require('horario.php'); require('style.css'); require('conf_db.php');
+<?php require('horario.php'); require('style.css'); require('conf_db.php');session_start();
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
     try{
@@ -10,9 +10,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $conex = new PDO("mysql:host=$servidor;dbname=$basedados",$usuario,$senha);
     $conex->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-     
+        header("Refresh:0");
     
-    
+        
         $turma = $_POST["turma"];
         $avaliador = $_POST["avaliador"];
         $nome_projeto = $_POST["Nome" ];
@@ -26,53 +26,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         $total = $_POST["Total"];
         $aprovado = $_POST["radio"];
         
-        if($_POST["PertinenciaTema"] < 1){
-            $pertinencia_tema = 1;
-        }elseif($_POST["PertinenciaTema"] > 10){
-            $pertinencia_tema = 10;
-        }
         
-        if($_POST["Inovacao"] < 1){
-            $inovacao = 1;
-        }elseif($_POST["Inovacao"] > 10){
-            $inovacao = 10;
-        }
-        
-        if($_POST["Aplicabilidade"] < 1){
-            $aplicabilidade = 1;
-        }elseif($_POST["Aplicabilidade"] > 10){
-            $aplicabilidade = 10;
-        }
-        
-        if($_POST["Construcao"] < 1){
-            $construcao = 1;
-        }elseif($_POST["Construcao"] > 10){
-            $construcao = 10;
-        }
-        
-        if($_POST["Funcionabilidade"] < 1){
-            $funcionabilidade = 1;
-        }elseif($_POST["Funcionabilidade"] > 10){
-            $funcionabilidade = 10;
-        }
-        
-        if($_POST["DominioTecnico"] < 1){
-            $dominio = 1;
-        }elseif($_POST["DominioTecnico"] > 10){
-            $dominio = 10;
-        }
-        
-        if($_POST["Apresentacao"] < 1){
-            $apresentacao = 1;
-        }elseif($_POST["Apresentacao"] > 10){
-            $apresentacao = 10;
-        }
-        
-        if($_POST["Total"] < 1){
-            $total = 1;
-        }elseif($_POST["Total"] > 10){
-            $total = 10;
-        }
         
        if($nome_projeto != ""){
             $comando = $conex->prepare(" INSERT INTO avaliacao(turma, avaliador, nome_projeto, pertinencia_tema, inovacao, aplicabilidade, construcao, funcionabilidade, dominio, apresentacao, total, aprovado)
@@ -111,6 +65,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 ?>
 
 <meta charset="utf-8" />
+    <style>
+    tr:nth-child(even) {
+    background-color: #d8d8d8;
+}
+    </style>
 
 <body>
     <form method="post" class="boxavaliacao" target="avaliacao.php">
@@ -135,7 +94,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         </center>
 
         <div class="avaliador">
-            Avaliador: <input type="text" class="textoavaliacao" name="avaliador">
+            Avaliador: <?php echo $_SESSION["logado"]; ?>
         </div>
 
         <br />
@@ -255,7 +214,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         Durante as apresentações:
         <p />
     </b>
-    - Atribuir note de 0 a 10 nos critérios apresentados
+    - Atribuir note de I a MB nos critérios apresentados
     <p />
     - Emitir sua opinião sobre a aprovação do projeto para a apresentação na
     <?php echo $excute; ?>ª EXCUTE
