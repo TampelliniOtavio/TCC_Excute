@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<meta charset="utf-8">
 <?php require('style.css'); require('horario.php'); require('conf_db.php'); session_start();
     function Retirar_caracter($objeto){
     $arroba = "@";
@@ -112,74 +113,76 @@
              $fk = $linha["Fk_Inscricao"];
          }
         
-        $comando7 = $conex->prepare(" SELECT * FROM inscricao inner join aluno on $fk=Cod_Inscricao"); 
-        //$params4 = array(':pusername' => $_SESSION['logado']);
-        $comando7->execute();
-        //var_dump($comando7);
+        $comando7 = $conex->prepare(" SELECT * FROM inscricao inner join aluno  on Cod_Inscricao=Fk_Inscricao where Fk_Inscricao = $fk"); 
+        $params4 = array(':pusername' => $_SESSION['logado']);
+        $comando7->execute($params);
     ?>
 
 
     <div style="margin-top:10vh;">
         <table>
-
-            <tr>
+                <?php
+				$cont = 1;
+					while($cont < 2 && $linha = $comando7->fetch(PDO::FETCH_ASSOC  )){
+            echo "<tr>";
                 
-                <td class="negrito">título do projeto</td>
-                <td class="negrito">Nome</td>
-                <td class="negrito">Email</td>
-                <td class="negrito">RG</td>
-                <td class="negrito">Professor Avaliador</td>
-                <td class="negrito">Email do professor</td>
-                <td class="negrito">Nome da Escola</td>
+                echo "<td class='negrito'>título do projeto</td>";
+                echo "<td class='negrito'>Nome</td>";
+                echo "<td class='negrito'>Email</td>";
+                echo "<td class='negrito'>RG</td>";
+                echo "<td class='negrito'>Professor Avaliador</td>";
+                echo "<td class='negrito'>Email do professor</td>";
+                echo "<td class='negrito'>Nome da Escola</td>";
 
-            </tr>
-            <tr>
-                <?php 
-                    while($linha = $comando7->fetch(PDO::FETCH_ASSOC)){
+            echo "</tr>";
+            echo "<tr>";
+
+						
                         echo"<td>{$linha["Titulo"]}</td>";
-                    } 
-                    while($linha = $comando4->fetch(PDO::FETCH_ASSOC)){
-                        echo"<td>{$linha["Nome"]}</td>";
+						echo"<td>{$linha["Nome"]}</td>";
                         echo"<td>{$linha["Email"]}</td>";
                         echo"<td>{$linha["RG"]}</td>";
-                    } while($linha = $comando7->fetch(PDO::FETCH_ASSOC)){
-                        echo"<td>{}</td>";
-                        echo"<td>{}</td>";
-                    } while($linha = $comando4->fetch(PDO::FETCH_ASSOC)){
-                        echo "<td>{$linha["Nome_Escola"]}</td>";
-                    }
+						echo"<td>{$linha["Prof_Resp"]}</td>";
+                        echo"<td>{$linha["Email_Prof"]}</td>";
+						echo "<td>{$linha["Nome_Escola"]}</td>";
+                    
                 
                 
-                ?>
                 
-            </tr>
+            echo "</tr>";
 
 
 
-            <tr>
-                <td class="negrito">Habilitação</td>
-                <td class="negrito">Série/Módulo</td>
-                <td class="negrito">Descrição</td>
-                <td class="negrito">Colaboradores</td>
-                <td class="negrito">Alimentação</td>
-                <td class="negrito">Local</td>
-                <td class="negrito">Necessidades</td>
-            </tr>
-            <tr>
-
-                <td>Informática Integrado</td>
-                <td>3</td>
-                <td>Informatizar o processo da Excute</td>
-                <td>Nenhum</td>
-                <td>127V</td>
-                <td>Quadra</td>
-                <td>Nenhum</td>
+           echo "<tr>";
+                echo "<td class='negrito'>Habilitação</td>";
+                echo "<td class='negrito'>Série/Módulo</td>";
+                echo "<td class='negrito'>Descrição</td>";
+                echo "<td class='negrito'>Colaboradores</td>";
+                echo "<td class='negrito'>Alimentação</td>";
+                echo "<td class='negrito'>Local</td>";
+                echo "<td class='negrito'>Necessidades</td>";
+            echo "</tr>";
+            echo "<tr>";
+				
+					
+					echo "<td>{$linha["Habilitacao"]}</td>";
+					echo "<td>{$linha["Modulo"]}</td>";
+					echo "<td>{$linha["Descricao"]}</td>";
+					echo "<td>{$linha["Patrocinadores"]}</td>";
+					echo "<td>{$linha["Alimentacao"]}</td>";
+					echo "<td>{$linha["Local"]}</td>";
+					echo "<td>{$linha["Necessidade_Esp"]}</td>";
+					
+			$cont++;
+	}
+					
+				?>
             </tr>
 
         </table>
     </div>
     <form>
-        <input type="button" class="input form" name="alterar" value="Alterar dados">
+        <!--input type="button" class="input form" name="alterar" value="Alterar dados"-->
 
     </form>
 
@@ -200,7 +203,7 @@ echo "<tr><td>{$linha['titulo']} </td></tr>";
 }
                 ?>
         </table>
-        <input type="button" class="input" name="mudar" value="Alterar dados">
+        <!--input type="button" class="input" name="mudar" value="Alterar dados"-->
     </form>
     <form action="avaliacao.php" method="post">
         <button type="submit" class="input form">Avaliação na Banca</button>
