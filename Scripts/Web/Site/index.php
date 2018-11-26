@@ -36,7 +36,7 @@ function Retirar_caracter($objeto){
              $conex->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
               
               
-             $comando = $conex->prepare(" SELECT * FROM aluno WHERE Email=:pusername"); 
+             $comando = $conex->prepare(" SELECT * FROM aluno WHERE Nome=:pusername"); 
              $params = array(':pusername' => $login);
              $comando->execute($params);
               
@@ -50,8 +50,8 @@ function Retirar_caracter($objeto){
 
               
              if ($linha = $comando->fetch(PDO::FETCH_ASSOC)) {
-                $email = $linha['Email'];
-                if( Retirar_caracter($email) == Retirar_caracter($login) 
+                 
+                if( $linha['Nome'] == $login
                     && $linha["senha"] == base64_encode($password)) {
 
                     //Login efetuado
@@ -95,7 +95,7 @@ function Retirar_caracter($objeto){
     unset($_SESSION["logado"]);
   }
 //HTML
-echo $_SESSION['email'];
+
 ?>
 <html>
 <style>

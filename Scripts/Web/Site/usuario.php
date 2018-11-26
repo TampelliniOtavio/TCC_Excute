@@ -58,12 +58,12 @@
 
 <body>
     <?php 
-    echo $_SESSION["email"]; echo $_SESSION['usuario'];
+    
     if(isset($_SESSION["logado"])){
         $conex = new PDO("mysql:host=$servidor;dbname=$basedados",$usuario,$senha);
         $conex->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-             $comando = $conex->prepare(" SELECT Email FROM aluno WHERE Email=:pusername"); 
+             $comando = $conex->prepare(" SELECT Nome FROM aluno WHERE Nome=:pusername"); 
              $params = array(':pusername' => $_SESSION['logado']);
              $comando->execute($params);
         
@@ -78,22 +78,22 @@
         
         
         if ($linha = $comando->fetch(PDO::FETCH_ASSOC)) {
-                if(Retirar_caracter($linha["Email"]) == Retirar_caracter($_SESSION['email'])) {
+                if(Retirar_caracter($linha["Nome"]) == Retirar_caracter($_SESSION['logado'])) {
                     $usuario = 1;
-                    echo $_SESSION['usuario'] = $usuario;
+                    $_SESSION['usuario'] = $usuario;
                 }
 
             }
               if ($linha = $comando2->fetch(PDO::FETCH_ASSOC)) {
                 if($linha["username"] == $_SESSION['logado']) {
                     $usuario = 3;
-                    echo $_SESSION['usuario'] = $usuario;
+                    $_SESSION['usuario'] = $usuario;
                 }
             }
               if ($linha = $comando3->fetch(PDO::FETCH_ASSOC)) {
                 if($linha["username"] == $_SESSION['logado']) {
                     $usuario = 2;
-                    echo $_SESSION['usuario'] = $usuario;
+                    $_SESSION['usuario'] = $usuario;
                 }
             }
         
@@ -105,18 +105,17 @@
     <?php echo $_SESSION['logado']; ?>.<br />
     <?php
     if($usuario == 1){
-        $comando4 = $conex->prepare(" SELECT cod_aluno FROM aluno WHERE username=:pusername");
+        $comando4 = $conex->prepare(" SELECT * FROM aluno WHERE Nome=:pusername");
         $params4 = array(':pusername' => $_SESSION['logado']);
         $comando4->execute($params);
          while($linha = $comando4->fetch(PDO::FETCH_ASSOC)){
              $fk = $linha["Fk_Inscricao"];
          }
-        echo $fk;
         
-        $comando7 = $conex->prepare(" SELECT * FROM iscricao inner join aluno on $fk=Cod_Inscricao"); 
+        $comando7 = $conex->prepare(" SELECT * FROM inscricao inner join aluno on $fk=Cod_Inscricao"); 
         //$params4 = array(':pusername' => $_SESSION['logado']);
         $comando7->execute();
-        var_dump($comando7);
+        //var_dump($comando7);
     ?>
 
 
@@ -137,7 +136,7 @@
             <tr>
                 <?php 
                     while($linha = $comando7->fetch(PDO::FETCH_ASSOC)){
-                        echo"<td>{$linha["titulo"]}</td>";
+                        echo"<td>{$linha["Titulo"]}</td>";
                     } 
                     while($linha = $comando4->fetch(PDO::FETCH_ASSOC)){
                         echo"<td>{$linha["Nome"]}</td>";
