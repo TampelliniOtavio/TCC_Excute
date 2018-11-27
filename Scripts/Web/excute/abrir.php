@@ -1,9 +1,9 @@
 <html>
-<head>
+    <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="menu2.css" />
-<style>
-.clsoption{
+        <link hel="stylesheet" href="menu2.css">
+        <style>
+        .clsoption{
     padding-left: 20px;
   }
   body
@@ -32,7 +32,7 @@
 
 }
     #menu{
-        margin-top: -0.5%;
+        margin-top: 1%;
         margin-left: 0%;
         font-size: 100%;
         float: left;
@@ -41,7 +41,7 @@
     #menu ul a {
         background: #000;
         display: block;
-        height: 40%;
+        height: 60%;
         margin-top: 0%;
         color:white;
         text-decoration: none;
@@ -51,9 +51,6 @@
         line-height: 200%;
         padding: 0% 40px;
         
-    }
-    #menu a{
-        color: white;
     }
     #menu ul li:hover{
         -webkit-transition: 7s ease-in;
@@ -103,19 +100,24 @@ transition: 0.5s ease-in;
 -webkit-box-shadow: 0px 0px 1em #333;
 -moz-box-shadow: 0px 0px 1em #333;
             -webkit-transition: opacity 2s ease-in;
+        
             
 }
     #menu ul ul ul{
         line-height:120%;
 	padding:10px 15px
     }
+            #menu a{
+                text-decoration: none;
+                color: white;
+            }
  
     .tabela{
         width:100%;
         text-align:left;
         float:inherit left;
         border:1px black solid;
-        background-color:black;
+        background-color:transparent;
         color:white;
         text-decoration: none;
         text-align: center;
@@ -124,8 +126,7 @@ transition: 0.5s ease-in;
     }
     .tabela a
     {
-        text-decoration: none; 
-        color: white;
+        text-decoration: none;  
     }
     
     .tabela tr td{
@@ -271,39 +272,11 @@ transition: 0.5s ease-in;
                 color :white;
                 font-size: 35;
                 }
-    
-</style>
-<div class="caixa">
-
-
-
-        <br/><nav id="menu">
-<ul>
-  
-  <li><a href="http://www.jorgestreet.com.br/">Site da ETEC Jorge Street</a>
-   
-  </li>
-  <li><a href="tabelas.php"\>Voltar</a>
-    <ul>
-        
-    
-            
-    </ul>
-  </li>
-  <li><a >Feiras e Exposições</a>
-    <ul>
-      <li class="dir"><a href="febrace.html">FEBRACE</a></li>
-      
-    </ul>
-  </li>
-  <li><a href="regras_carrinho.doc" download="carrinho_dedicado.doc" target="new">Carrinho Dedicado</a>
-    
-        </li></ul></nav> <br/> </div> 
-</head>
+    </style>
 <body>
-
 <?php
 require_once("conf_db.php");
+$codigo = $_GET["cod"];
 
 $conex = new PDO("mysql:host=$servidor; dbname=$basedados", 
 		    $usuario,
@@ -312,27 +285,21 @@ $conex = new PDO("mysql:host=$servidor; dbname=$basedados",
 	$conex->exec("SET NAMES 'utf8'");
 	$conex->exec("SET CHARACTER SET utf8");
     $conex->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $query = " select 
-	Cod_Inscricao,	Titulo,	Prof_Resp,	Email_Prof,	Descricao,	Patrocinadores,	Alimentacao,	Local,	Necessidade_Esp, Cod_Aluno,	Nome,	Email,	RG,	Modulo,	Habilitacao, Nome_Escola 
-	from inscricao inner join aluno on Cod_Inscricao = Fk_Inscricao 
-
-	";
+    $query=" select * from inscricao inner join aluno on Fk_Inscricao = cod_inscricao where cod_inscricao = " . $codigo;
 $comando = $conex->prepare($query); 
-$comando->execute();   
-echo "<a href=\"export.php?a=TodosDados.xls&q=" . $query . "\"/>Exportar para excel</a>";
+$comando->execute();
+echo "<a href=\"export.php?a=AlunosGrupo$codigo.xls&q=" . $query . "\"/>Exportar para excel</a>";
 echo "<table class='tabela'>";
-//echo "<thead><tr><th>Codigo do Grupo</th> <th>Projeto</th> <th>Número de integrantes</th>";
-echo "<tr><th> Inscrição </th><th> Titulo </th><th> Prof_Resp </th><th> Email_Prof </th><th> Descricao </th><th> Patrocinadores </th><th> Alimentacao </th><th> Local </th><th> Necessidade_Esp </th><th> Cod_Aluno </th><th> Nome </th><th> Email </th><th> RG </th><th> Modulo </th><th> Habilitacao </th><th> Nome_Escola </th><th>  </th>";
+echo "<thead><tr><th>Codigo do Grupo</th> <th>Titulo</th> <th>Código Aluno</th> <th>Nome</th> <th>Email</th> <th>RG</th> 
+<th>Módulo</th> <th>Habilitação</th> <th>Nome_Escola</th> <th>Fk_Inscricao</th></tr></thead><tbody>";
 while ($linha = $comando->fetch(PDO::FETCH_ASSOC)) {
-	echo "<tr><td>{$linha['Cod_Inscricao']} </td>
-	<td>{$linha['Titulo']}</td><td>{$linha['Prof_Resp']}</td><td>{$linha['Email_Prof']}</td><td>{$linha['Descricao']}</td><td>{$linha['Patrocinadores']}</td><td>{$linha['Alimentacao']}</td><td>{$linha['Local']}</td><td>{$linha['Necessidade_Esp']}</td><td>{$linha['Cod_Aluno']}</td><td>{$linha['Nome']}</td><td>{$linha['Email']}</td><td>{$linha['RG']}</td><td>{$linha['Modulo']}</td><td>{$linha['Habilitacao']}</td><td>{$linha['Nome_Escola']}</td><td></td>";
+echo "<tr><td>{$linha['Cod_Inscricao']} </td>
+<td>{$linha['Titulo']}</td> <td>{$linha['Cod_Aluno']}</td> 
+<td>{$linha['Nome']}</td> <td>{$linha['Email']}</td> <td>{$linha['RG']}</td> <td>{$linha['Modulo']}</td> <td>{$linha['Habilitacao']}</td>
+<td>{$linha['Nome_Escola']}</td> <td>{$linha['Fk_Inscricao']}</td>";
 }
-echo "</tbody> </table>";
+echo "<div class='caixa'><nav id='menu'><a href='index.php'>Voltar para Tabela</a></nav></div>";
+echo "</form>";
 ?>
-
-<div class="menucontato"><div class="oi">.</div><div class="contato">Contato <div></div><div>.....................................................................</div><div><divc class="oi">.</divc></div>ETEC Jorge Street<div></div>
-Rua Bell´Aliance,<div></div> 149 - São Caetano do Sul
-Tel: 4238-0424
-</div>
 </body>
 </html>

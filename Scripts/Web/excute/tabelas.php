@@ -1,4 +1,3 @@
-<html>
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="menu2.css" />
@@ -271,6 +270,17 @@ transition: 0.5s ease-in;
                 color :white;
                 font-size: 35;
                 }
+	.my-div {
+    background-color: lightgrey;
+    width: 20px;
+    height: 20px;
+}
+
+a.fill-div {
+    margin-left: 9.5%;
+	font-size: 25;
+	color : azure;
+    display: block;
     
 </style>
 <div class="caixa">
@@ -282,8 +292,6 @@ transition: 0.5s ease-in;
   
   <li><a href="http://www.jorgestreet.com.br/">Site da ETEC Jorge Street</a>
    
-  </li>
-  <li><a href="tabelas.php"\>Voltar</a>
     <ul>
         
     
@@ -301,40 +309,13 @@ transition: 0.5s ease-in;
         </li></ul></nav> <br/> </div> 
 </head>
 <body>
-
-<?php
-require_once("conf_db.php");
-
-$conex = new PDO("mysql:host=$servidor; dbname=$basedados", 
-		    $usuario,
-		    $senha
-		);
-	$conex->exec("SET NAMES 'utf8'");
-	$conex->exec("SET CHARACTER SET utf8");
-    $conex->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $query = " select * from inscricao";
-$comando = $conex->prepare($query); 
-$comando->execute();   
-echo "<a href=\"export.php?a=Grupos.xls&q=" . $query . "\"/>Exportar para excel</a>";
-echo "<table class='tabela'>";
-echo "<thead><tr><th>Codigo do Grupo</th> <th>Titulo</th> <th>Professor Responsável</th> <th>Email_Prof</th> <th>Descrição</th> <th>Patrocinadores</th> <th>Alimentação</th>
-<th>Local</th> <th>Necessidade_Esp</th></tr></thead><tbody>";
-	
-while ($linha = $comando->fetch(PDO::FETCH_ASSOC)) {
-	//$conta=count($linha['Cod_Inscricao']);
-echo "<tr><td><a href='abrir.php?cod={$linha['Cod_Inscricao']}'>{$linha['Cod_Inscricao']} ver detalhes </td>
-<td>{$linha['Titulo']}</td> <td>{$linha['Prof_Resp']}</td> <td>{$linha['Email_Prof']}</td> <td>{$linha['Descricao']}</td> <td>{$linha['Patrocinadores']}</td> 
-<td>{$linha['Alimentacao']}</td> <td>{$linha['Local']}</td> <td>{$linha['Necessidade_Esp']}</td>";
-//echo $conta;
-
-
-}
-
-
-//echo $_GET['codigo'];
-echo "</tbody> </table>";
-?>
-<div class="menucontato"><div class="oi">.</div><div class="contato">Contato <div></div><div>.....................................................................</div><div><divc class="oi">.</divc></div>ETEC Jorge Street<div></div>
+<div id="my-div">
+<a href="tabprojeto.php" class="fill-div">Tabela Projeto(para exportar)</a>
+</br><a href="tabela.php" class="fill-div">Todos Projetos(visualização geral)</a>
+</br><a href="tudo.php" class="fill-div">Todos os dados(visualização geral alunos+projetos)</a>
+</div>
+<div class="menucontato"><div class="oi">.</div><div class="contato">Contato
+ <div></div><div>.....................................................................</div><div><divc class="oi">.</divc></div>ETEC Jorge Street<div></div>
 Rua Bell´Aliance,<div></div> 149 - São Caetano do Sul
 Tel: 4238-0424
 </div>

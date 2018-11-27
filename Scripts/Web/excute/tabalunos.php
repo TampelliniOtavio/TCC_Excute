@@ -313,26 +313,24 @@ $conex = new PDO("mysql:host=$servidor; dbname=$basedados",
 	$conex->exec("SET CHARACTER SET utf8");
     $conex->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $query = " select 
- Cod_Inscricao,	Titulo,	Prof_Resp,	Email_Prof,	Descricao,	Patrocinadores,	Alimentacao,	Local,	Necessidade_Esp,
- count(cod_aluno) as integrantes 
- from inscricao inner join aluno on Cod_Inscricao = Fk_Inscricao 
- GROUP BY Cod_Inscricao,	Titulo,	Prof_Resp,	Email_Prof,	Descricao,	Patrocinadores,	Alimentacao,	Local,	Necessidade_Esp	";
+	Cod_Inscricao,	Titulo,	Prof_Resp,	Email_Prof,	Descricao,	Patrocinadores,	Alimentacao,	Local,	Necessidade_Esp, Cod_Aluno,	Nome,	Email,	RG,	Modulo,	Habilitacao, nomecurso as NomeHabilitacao,	Nome_Escola 
+	from inscricao inner join aluno on Cod_Inscricao = Fk_Inscricao 
+	left join cursos on chavecurso = Habilitacao 
+	GROUP BY Cod_Inscricao,	Titulo,	Prof_Resp,	Email_Prof,	Descricao,	Patrocinadores,	Alimentacao,	Local,	Necessidade_Esp ";
 $comando = $conex->prepare($query); 
 $comando->execute();   
-
+echo "<a href=\"export.php?a=Alunos.xls&q=" . $query . "\"/>Exportar para excel</a>";
 echo "<table class='tabela'>";
-echo "<thead><tr><th>Código do Grupo</th> <th>Número de Integrantes</th> <th>Projeto</th> <th>Professor Orientador</th>";
-	
+//echo "<thead><tr><th>Codigo do Grupo</th> <th>Projeto</th> <th>Número de integrantes</th>";
+echo "<tr><th> Inscrição </th><th> Titulo </th><th> Prof_Resp </th><th> Email_Prof </th><th> Descricao </th><th> Patrocinadores </th><th> Alimentacao </th><th> Local </th><th> Necessidade_Esp </th><th> Cod_Aluno </th><th> Nome </th><th> Email </th><th> RG </th><th> Modulo </th><th> Habilitacao </th><th> NomeHabilitacao </th><th> Nome_Escola </th><th>  </th>";
 while ($linha = $comando->fetch(PDO::FETCH_ASSOC)) {
-echo "<tr><td>{$linha['Cod_Inscricao']} </td>
-<td>{$linha['integrantes']}</td> <td>{$linha['Titulo']}</td> <td>{$linha['Prof_Resp']}</td> 
-<td><a href='export.php?a=projetos.xls&q=$query'/>Exportar para excel</a></td>";
+	echo "<tr><td>{$linha['Cod_Inscricao']} </td>
+	<td>{$linha['Titulo']}</td><td>{$linha['Prof_Resp']}</td><td>{$linha['Email_Prof']}</td><td>{$linha['Descricao']}</td><td>{$linha['Patrocinadores']}</td><td>{$linha['Alimentacao']}</td><td>{$linha['Local']}</td><td>{$linha['Necessidade_Esp']}</td><td>{$linha['Cod_Aluno']}</td><td>{$linha['Nome']}</td><td>{$linha['Email']}</td><td>{$linha['RG']}</td><td>{$linha['Modulo']}</td><td>{$linha['Habilitacao']}</td><td>{$linha['NomeHabilitacao']}</td><td>{$linha['Nome_Escola']}</td><td></td>";
 }
-echo "</table>";
+echo "</tbody> </table>";
 ?>
 
-<div class="menucontato"><div class="oi">.</div><div class="contato">Contato
- <div></div><div>.....................................................................</div><div><divc class="oi">.</divc></div>ETEC Jorge Street<div></div>
+<div class="menucontato"><div class="oi">.</div><div class="contato">Contato <div></div><div>.....................................................................</div><div><divc class="oi">.</divc></div>ETEC Jorge Street<div></div>
 Rua Bell´Aliance,<div></div> 149 - São Caetano do Sul
 Tel: 4238-0424
 </div>

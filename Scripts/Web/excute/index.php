@@ -222,7 +222,7 @@ function Retirar_caracter($objeto){
     ?>
     </div>
     <div class="img"><img src="bolita.png" style="width:100%;height:100%;"></div>
-    <div class="cadastro"><a href="index_educatronica.php">Clique aqui para se inscrever</a></div>
+    <div class="cadastro"><a href="inscricao.php">Clique aqui para se inscrever</a></div>
     <div class="informacoes">A
         <?php echo $excute;?>ª Excute ocorerrá nos dias 07/12 e 08/12 das 19h às 22:30h e das 09h às 11:30h, respectivamente, na ETEC Jorge Street, situada na Rua Bell'Aliance, 149 - São Caetano do Sul. </div>
     <div class="divcontato"><iframe src="contato.php" frameborder="0" width="100%" height="100%" scrolling="no"></iframe></div>

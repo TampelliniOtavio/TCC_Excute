@@ -172,6 +172,8 @@
 					echo "<td>{$linha["Alimentacao"]}</td>";
 					echo "<td>{$linha["Local"]}</td>";
 					echo "<td>{$linha["Necessidade_Esp"]}</td>";
+                        
+                        $codigoProjeto = $linha["Fk_Inscricao"];
 					
 			$cont++;
 	}
@@ -185,7 +187,7 @@
         <!--input type="button" class="input form" name="alterar" value="Alterar dados"-->
 
     </form>
-
+    <a href="cdi.php?cod=<?=$codigoProjeto?>" target="_blank">Autorização do uso de imagem</a>
     <?php
 } // aluno
     if($usuario == 2){
@@ -214,7 +216,6 @@ echo "<tr><td>{$linha['titulo']} </td></tr>";
 
     <div id="my-div" style="margin-top:5vh;">
         <a href="tabprojeto.php">Tabela Projeto(para exportar)</a>
-        <br /><a href="tabalunos.php">Tabela Aluno(para exportar)</a>
         <br /><a href="tabela.php">Todos Projetos(visualização geral)</a>
         <br /><a href="tudo.php">Todos os dados(visualização geral alunos+projetos)</a>
     </div>
